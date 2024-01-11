@@ -1,0 +1,24 @@
+{
+    "name": "api-wtf-fernando",
+    "version": "1.0.0",
+    "description": "Backend para una aplicación web",
+    "main": "app.js",
+    "type": "module",
+    "scripts": {
+        "start": "nodemon ./app.js"
+    },
+    "dependencies": {
+        "api": "^6.1.1",
+        "cors": "^2.8.5",
+        "dotenv": "^16.3.1",
+        "express": "^4.18.2",
+        "mysql2": "^3.6.5",
+        "zod": "^3.22.4"
+    },
+    "engines": {
+        "node": ">=14.0.0"
+    },
+    "devDependencies": {
+        "nodemon": "^3.0.2"
+    }
+}
