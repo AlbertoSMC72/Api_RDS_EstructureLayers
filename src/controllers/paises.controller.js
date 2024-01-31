@@ -1,4 +1,3 @@
-import e from 'express';
 import {getPaisesService} from '../services/paises.service.js';
 export const getPaisesController =  async (req, res) => {
     getPaisesService()

@@ -1,0 +1,6 @@
+projectKey=apiPaises
+serverUrl=http://localhost:9000
+serverVersion=10.3.0.82913
+dashboardUrl=http://localhost:9000/dashboard?id=apiPaises
+ceTaskId=AY058H_c0L7pUPkxnjAs
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AY058H_c0L7pUPkxnjAs

@@ -1,5 +1,5 @@
-import { getPaises } from '../repocitorios/paises.repocitories.js';
-import { getNombrePaises } from "../dtos/getPaises.js"
+import { getPaises ,getPais, postPais, putPais, deletePais} from '../repocitorios/paises.repocitories.js';
+import { getNombrePaises,getNombrePais } from "../dtos/getPaises.js"
 export const getPaisesService = async () => {
     try {
         const paises = await getPaises();
@@ -9,8 +9,6 @@ export const getPaisesService = async () => {
     }
 }
 
-import { getPais } from '../repocitorios/paises.repocitories.js';
-import { getNombrePais } from "../dtos/getPaises.js"
 export const getPaisService = async (id) => {
     try {
         const pais = await getPais(id);
@@ -21,8 +19,7 @@ export const getPaisService = async (id) => {
     }
 }
 
-import { postPais } from '../repocitorios/paises.repocitories.js';
-import { validacionPais } from "../validations/paises.validation.js"
+import { validacionPais,validacionPaisParcial } from "../validations/paises.validation.js"
 export const postPaisService = async (pais) => {
     try {
         const validarPais = validacionPais(pais)
@@ -40,8 +37,6 @@ export const postPaisService = async (pais) => {
     }
 }
 
-import { putPais } from '../repocitorios/paises.repocitories.js';
-import { validacionPaisParcial } from "../validations/paises.validation.js"
 export const putPaisService = async (paisPut, id) => {
     try {
         const validarPais = validacionPaisParcial(paisPut)
@@ -60,7 +55,6 @@ export const putPaisService = async (paisPut, id) => {
     }
 }
 
-import { deletePais } from '../repocitorios/paises.repocitories.js';
 export const deletePaisService = async (id) => {
     try {
         const pais = await deletePais(id);
