@@ -2,11 +2,13 @@ import { Router } from "express";
 import paisesRouter from "./paises.router.js";
 import usersRouter from "./user.route.js"
 import loguinRouter from "./auth.route.js";
+import chatRouter from "./chat.route.js";
 const router = Router();
-const prefijo ="app";
+const prefijo = "app";
 
 router.use(`/${prefijo}/paises`, paisesRouter);
 router.use(`/${prefijo}/user`, usersRouter)
 router.use(`/${prefijo}/auth`, loguinRouter);
+router.use(`/${prefijo}/chat`, chatRouter);
 
 export default router;

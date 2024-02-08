@@ -4,22 +4,18 @@ import dotenv from 'dotenv';
 import idex from './src/routes/index.router.js';
 import confing from './src/config/confing.js';
 import { Server } from 'socket.io';
-import {createServer} from 'http';
-import {verifyJWT} from './src/middlewares/socketio/auth.middleware.js';
-
+import { createServer } from 'http';
+import { verifyJWT } from './src/middlewares/socketio/auth.middleware.js';
+import { putUsuarioService } from './src/services/users.service.js';
 const app = new Express();
 
 app.use(Cors());
 dotenv.config();
 app.use(Express.json());
-app.use("/" , idex);
+app.use("/", idex);
 
-app.set('port', process.env.PORT );
+app.set('port', process.env.PORT);
 
-/* app.listen(app.get('port'), () => {
-    console.log(`Server on port ${app.get('port')}`);
-});
- */
 app.use(`*`, (req, res) => {
     res.status(404).send("Ruta equivocada");
 });
@@ -37,12 +33,12 @@ const httpServer = createServer(app);
 const io = new Server(httpServer, {
     cors: {
         origin: "*",
-        methods: ["GET", "POST","PATCH","DELETE","PUT"] 
-      },
+        methods: ["GET", "POST", "PATCH", "DELETE", "PUT"]
+    },
     pingInterval: 1000,
     pingTimeout: 2000
 });
-
+// Configuración de autenticación de socket.io
 io.use(verifyJWT);
 
 // Configuración de handlers de socket.io
@@ -56,7 +52,7 @@ io.on('connection', (socket) => {
     socket.on('createRoom', () => {
         const roomId = Math.random().toString(36).substring(7);
         socket.join(roomId);
-        activeRooms.set(roomId, { players: [{ id: socket.id, choice: '' }] });
+        activeRooms.set(roomId, { players: [{ id: socket.id, playerName: socket.handshake.auth.nombre_usuario, choice: '' }] });
         socket.emit('roomCreated', roomId);
     });
 
@@ -67,7 +63,7 @@ io.on('connection', (socket) => {
             return;
         }
         socket.join(roomId);
-        room.players.push({ id: socket.id, choice: '' });
+        room.players.push({ id: socket.id, playerName: socket.handshake.auth.nombre_usuario, choice: '' });
         io.to(roomId).emit('playerJoined', room.players);
         if (room.players.length === 2) {
             io.to(roomId).emit('gameStart');
@@ -86,12 +82,23 @@ io.on('connection', (socket) => {
             const result = evaluateWinner(player1.choice, player2.choice);
 
             // Enviar información de qué jugador perdió
-            const loser = result === '¡Ganaste!' ? player2 : player1;
-            const winner = result === '¡Ganaste!' ? player1 : player2;
+            const loser = result === '¡Ganaste!' ? player2.playerName : player1.playerName;
+            const winner = result === '¡Ganaste!' ? player1.playerName : player2.playerName;
+
+            //logica para dar puntos
+
+            putUsuarioService({ record: 1 }, winner)
+                .then((usuario) => console.log(usuario))
+                .catch((error) => console.log(error.message))
+
+            putUsuarioService({ record: -1 }, loser)
+                .then((usuario) => console.log(usuario))
+                .catch((error) => console.log(error.message))
 
             io.to(roomId).emit('result', { result, loser, winner });
         }
     });
+
     socket.on('disconnect', () => {
         console.log('Jugador desconectado', socket.id);
         activeRooms.forEach((room, roomId) => {
@@ -125,3 +132,4 @@ function evaluateWinner(choice1, choice2) {
 httpServer.listen(process.env.PORT, () => {
     console.log(`Servidor en ejecución en el puerto ${process.env.PORT}`);
 });
+

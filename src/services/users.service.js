@@ -50,7 +50,13 @@ export const putUsuarioService = async (usuarioPut, nombre) => {
             const originalUsuario = await getUsuario(nombre);
             const objetoActualizado = {...originalUsuario[0][0], ...usuarioPut}
             const {nombre_usuario, record, contrasena} = objetoActualizado;
-            const usuario = await putUsuario(nombre_usuario, record, contrasena, nombre);
+            
+            // Check if record exists and perform addition or subtraction
+            if (record !== undefined) {
+                objetoActualizado.record = originalUsuario[0][0].record + record;
+            }
+            
+            const usuario = await putUsuario(nombre_usuario, objetoActualizado.record, contrasena, nombre);
             return usuario;
         } else {
             throw new Error(validarUsuario.error.message)
