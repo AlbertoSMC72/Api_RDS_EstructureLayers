@@ -3,8 +3,8 @@ import { Router } from 'express';
 import { verifyJWT } from '../middlewares/http/auth.middleware.js';
 const userRouter = Router();
 
-userRouter.get('/', verifyJWT, getUsuariosController);
-userRouter.get('/:nombre', verifyJWT, getUsuarioController);
+userRouter.get('/', getUsuariosController);
+userRouter.get('/:nombre', getUsuarioController);
 userRouter.post('/', postUsuarioContoller);
 userRouter.put('/:nombre', verifyJWT, putUsuarioController);
 userRouter.delete('/:id', verifyJWT, deleteUsuarioController);
