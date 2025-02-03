@@ -18,22 +18,22 @@ export const getUsuario = (nombre) =>
             .catch((error) => reject(error));
     });
 
-export const postUsuario = (nombre_usuario, record, contrasena) =>
+export const postUsuario = (nombre_usuario, contrasena) =>
     new Promise((resolve, reject) => {
         const consulta =
-            " INSERT INTO jugadores (nombre_usuario, record, contrasena) VALUES (?, ?, ?)";
+            " INSERT INTO jugadores (nombre_usuario, contrasena) VALUES (?, ?)";
         confing
-            .execute(consulta, [nombre_usuario, record, contrasena])
+            .execute(consulta, [nombre_usuario, contrasena])
             .then((resultados) => resolve(resultados))
             .catch((error) => reject(error));
     });
 
-export const putUsuario = (nombre_usuario, record, contrasena, nombre) =>
+export const  putUsuario = (nombre_usuario, contrasena, nombre) =>
     new Promise((resolve, reject) => {
         const consulta =
-            " UPDATE jugadores SET nombre_usuario = ?, record = ?, contrasena = ? WHERE nombre_usuario = ?";
+            " UPDATE jugadores SET nombre_usuario = ?, contrasena = ? WHERE nombre_usuario = ?";
         confing
-            .execute(consulta, [nombre_usuario, record, contrasena, nombre])
+            .execute(consulta, [nombre_usuario, contrasena, nombre])
             .then((resultados) => resolve(resultados))
             .catch((error) => reject(error));
     });

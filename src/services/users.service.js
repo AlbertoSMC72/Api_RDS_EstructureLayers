@@ -26,12 +26,9 @@ export const postUsuarioService = async (usuario) => {
     try {
         const validarUsuario = validacionUsuario(usuario)
         if (validarUsuario.success) {
-            let {nombre_usuario, record, contrasena} = usuario;
-            if (record === undefined) {
-                record = 1;
-            }
+            let {nombre_usuario, contrasena} = usuario;
             contrasena = bcrypt.hashSync(contrasena, saltRounds);
-            const usuarioRes = await postUsuario(nombre_usuario, record, contrasena);
+            const usuarioRes = await postUsuario(nombre_usuario, contrasena);
             return usuarioRes;
         }
         else {
@@ -49,14 +46,10 @@ export const putUsuarioService = async (usuarioPut, nombre) => {
         if (validarUsuario.success) {
             const originalUsuario = await getUsuario(nombre);
             const objetoActualizado = {...originalUsuario[0][0], ...usuarioPut}
-            const {nombre_usuario, record, contrasena} = objetoActualizado;
+            const {nombre_usuario, contrasena} = objetoActualizado;
             
-            // Check if record exists and perform addition or subtraction
-            if (record !== undefined) {
-                objetoActualizado.record = originalUsuario[0][0].record + record;
-            }
             
-            const usuario = await putUsuario(nombre_usuario, objetoActualizado.record, contrasena, nombre);
+            const usuario = await putUsuario(nombre_usuario, contrasena, nombre);
             return usuario;
         } else {
             throw new Error(validarUsuario.error.message)

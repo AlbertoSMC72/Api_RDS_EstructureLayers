@@ -6,9 +6,6 @@ const users = z.object({
     nombre_usuario: z.string({
         invalid_type_error: "El nombre es un conjunto de caracteres"
     }),
-    record: z.number({
-        invalid_type_error: "El record es un numero"
-    }).optional(),
     contrasena: z.string({
         invalid_type_error: "La contraseña es un conjunto de caracteres"
     })
