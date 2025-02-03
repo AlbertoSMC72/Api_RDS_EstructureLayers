@@ -3,10 +3,7 @@ import Cors from 'cors';
 import dotenv from 'dotenv';
 import idex from './src/routes/index.router.js';
 import confing from './src/config/confing.js';
-import { Server } from 'socket.io';
 import { createServer } from 'http';
-import { verifyJWT } from './src/middlewares/socketio/auth.middleware.js';
-import { putUsuarioService } from './src/services/users.service.js';
 const app = new Express();
 
 app.use(Cors());
