@@ -6,7 +6,12 @@ import confing from './src/config/confing.js';
 import { createServer } from 'http';
 const app = new Express();
 
-app.use(Cors());
+app.use(Cors(
+    {
+        origin: "*",
+        methods: "GET,POST,PUT,DELETE",
+    }
+));
 
 dotenv.config();
 
