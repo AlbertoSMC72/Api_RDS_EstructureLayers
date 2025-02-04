@@ -24,7 +24,13 @@ export const postUsuario = (nombre_usuario, contrasena) =>
             " INSERT INTO jugadores (nombre_usuario, contrasena) VALUES (?, ?)";
         confing
             .execute(consulta, [nombre_usuario, contrasena])
-            .then((resultados) => resolve(resultados))
+            .then((resultados) => {
+                if (resultados.affectedRows = 1) {
+                    resolve({ message: "Usuario creado exitosamente" });
+                } else {
+                    reject({ message: "No se pudo crear el usuario" });
+                }
+            })
             .catch((error) => reject(error));
     });
 
