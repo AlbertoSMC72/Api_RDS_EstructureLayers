@@ -4,7 +4,10 @@ export function getNombrePaises(params) {
     params.forEach(element   => {
         arreglo.push({
             nombre: element.nombre || "",
-            codigo_iso: element.codigo_iso || ""
+            codigo_iso: element.codigo_iso || "",
+            capital: element.capital || "",
+            poblacion: element.poblacion || 0,
+            idioma: element.idioma_principal || "",
         })
     });
     return arreglo;
