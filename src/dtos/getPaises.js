@@ -7,7 +7,7 @@ export function getNombrePaises(params) {
             codigo_iso: element.codigo_iso || "",
             capital: element.capital || "",
             poblacion: element.poblacion || 0,
-            idioma: element.idioma_principal || "",
+            idioma_principal: element.idioma_principal || "",
         })
     });
     return arreglo;
